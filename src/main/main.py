@@ -79,6 +79,11 @@ def load_and_clean_users(file_path):
 
 # This function will load the callLogs.csv file into the callLogs table, discarding any records with incomplete data
 def load_and_clean_call_logs(file_path):
+    with open(file_path, "r", newline="", encoding="utf-8") as file:
+        reader = csv.reader(file)
+        
+        for row in reader:
+            print(row)
 
     print("TODO: load_call_logs")
 
