@@ -64,10 +64,7 @@ def load_and_clean_users(file_path):
             if user_id == "" or first_name == "" or last_name == "":
                 continue
 
-            try:
-                user_id = int(user_id)
-            except ValueError:
-                continue
+            user_id = int(user_id)
 
             cursor.execute(
                 """
