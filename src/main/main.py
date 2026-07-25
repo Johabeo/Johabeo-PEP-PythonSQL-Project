@@ -51,6 +51,8 @@ def load_and_clean_users(file_path):
     with open(file_path, "r", newline="", encoding="utf-8") as file:
         reader = csv.reader(file)
 
+        next(reader)
+        
         for row in reader:
             print(row)
             # Each valid row must contain firstName and lastName
