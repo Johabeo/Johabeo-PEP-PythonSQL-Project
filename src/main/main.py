@@ -52,26 +52,23 @@ def load_and_clean_users(file_path):
         reader = csv.reader(file)
 
         for row in reader:
-            print(row)
-            if len(row) != 3:
+            # Each valid row must contain firstName and lastName
+            if len(row) != 2:
                 continue
 
-            user_id = row[0].strip()
-            first_name = row[1].strip()
-            last_name = row[2].strip()
+            first_name = row[0].strip()
+            last_name = row[1].strip()
 
-            if not user_id or not first_name or not last_name:
-                continue
-
-            if not user_id.isdigit():
+            # Discard rows with missing values
+            if not first_name or not last_name:
                 continue
 
             cursor.execute(
                 """
-                INSERT INTO users (userId, firstName, lastName)
-                VALUES (?, ?, ?)
+                INSERT INTO users (firstName, lastName)
+                VALUES (?, ?)
                 """,
-                (int(user_id), first_name, last_name)
+                (first_name, last_name)
             )
 
     conn.commit()
