@@ -54,9 +54,6 @@ def load_and_clean_users(file_path):
         with open(file_path, "r", newline="", encoding="utf-8") as file:
             reader = csv.reader(file)
 
-            # Skip the header row if the CSV has one
-            next(reader, None)
-
             for row in reader:
                 # A valid row must contain exactly three values
                 if len(row) != 3:
@@ -90,18 +87,7 @@ def load_and_clean_users(file_path):
             valid_users
         )
 
-        conn.commit()
-
-        print(f"Loaded {len(valid_users)} valid users.")
         return valid_users
-
-    except FileNotFoundError:
-        print(f"File not found: {file_path}")
-        return []
-
-    except OSError as error:
-        print(f"Could not read the file: {error}")
-        return []
 
 
 # This function will load the callLogs.csv file into the callLogs table, discarding any records with incomplete data
