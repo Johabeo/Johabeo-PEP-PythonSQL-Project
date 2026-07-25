@@ -82,6 +82,8 @@ def load_and_clean_call_logs(file_path):
     with open(file_path, "r", newline="", encoding="utf-8") as file:
         reader = csv.reader(file)
         
+        next(reader) 
+        
         for row in reader:
             print(row)
 
