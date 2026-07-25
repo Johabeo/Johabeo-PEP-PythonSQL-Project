@@ -48,26 +48,22 @@ def main():
 
 # This function will load the users.csv file into the users table, discarding any records with incomplete data
 def load_and_clean_users(file_path):
+   global cursor
+
     with open(file_path, "r", newline="", encoding="utf-8") as file:
         reader = csv.reader(file)
 
         for row in reader:
-            # Each valid row must contain exactly three values
             if len(row) != 3:
                 continue
 
-            user_id, first_name, last_name = row
+            user_id = row[0].strip()
+            first_name = row[1].strip()
+            last_name = row[2].strip()
 
-            # Remove extra whitespace
-            user_id = user_id.strip()
-            first_name = first_name.strip()
-            last_name = last_name.strip()
-
-            # Discard rows with missing values
-            if not user_id or not first_name or not last_name:
+            if user_id == "" or first_name == "" or last_name == "":
                 continue
 
-            # Discard rows where userId is not an integer
             try:
                 user_id = int(user_id)
             except ValueError:
@@ -80,8 +76,6 @@ def load_and_clean_users(file_path):
                 """,
                 (user_id, first_name, last_name)
             )
-
-    conn.commit()
 
 
 # This function will load the callLogs.csv file into the callLogs table, discarding any records with incomplete data
