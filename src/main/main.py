@@ -52,6 +52,7 @@ def load_and_clean_users(file_path):
         reader = csv.reader(file)
 
         for row in reader:
+            print(row)
             if len(row) != 3:
                 continue
 
