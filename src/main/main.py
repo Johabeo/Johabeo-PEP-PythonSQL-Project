@@ -48,8 +48,6 @@ def main():
 
 # This function will load the users.csv file into the users table, discarding any records with incomplete data
 def load_and_clean_users(file_path):
-   global cursor
-
     with open(file_path, "r", newline="", encoding="utf-8") as file:
         reader = csv.reader(file)
 
@@ -61,18 +59,21 @@ def load_and_clean_users(file_path):
             first_name = row[1].strip()
             last_name = row[2].strip()
 
-            if user_id == "" or first_name == "" or last_name == "":
+            if not user_id or not first_name or not last_name:
                 continue
 
-            user_id = int(user_id)
+            if not user_id.isdigit():
+                continue
 
             cursor.execute(
                 """
                 INSERT INTO users (userId, firstName, lastName)
                 VALUES (?, ?, ?)
                 """,
-                (user_id, first_name, last_name)
+                (int(user_id), first_name, last_name)
             )
+
+    conn.commit()
 
 
 # This function will load the callLogs.csv file into the callLogs table, discarding any records with incomplete data
