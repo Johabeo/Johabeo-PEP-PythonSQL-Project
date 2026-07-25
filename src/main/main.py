@@ -86,7 +86,7 @@ def load_and_clean_users(file_path):
             """,
             valid_users
         )
-        return valid_users
+
 
 
 # This function will load the callLogs.csv file into the callLogs table, discarding any records with incomplete data
