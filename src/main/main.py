@@ -86,7 +86,6 @@ def load_and_clean_users(file_path):
             """,
             valid_users
         )
-
         return valid_users
 
 
