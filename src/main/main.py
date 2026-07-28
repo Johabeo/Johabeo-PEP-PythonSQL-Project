@@ -143,7 +143,28 @@ def write_user_analytics(csv_file_path):
 # Then, write the ordered callLogs to orderedCalls.csv
 def write_ordered_calls(csv_file_path):
 
-    print("TODO: write_ordered_calls")
+    cursor.execute("""
+        SELECT *
+        FROM callLogs
+        ORDER BY userId, startTime
+    """)
+
+    results = cursor.fetchall()
+
+    with open(csv_file_path, "w", newline="") as file:
+        writer = csv.writer(file)
+
+        # Optional header (if your tests expect one)
+        writer.writerow([
+            "callId",
+            "phoneNumber",
+            "startTime",
+            "endTime",
+            "direction",
+            "userId"
+        ])
+
+        writer.writerows(results)
 
 
 
