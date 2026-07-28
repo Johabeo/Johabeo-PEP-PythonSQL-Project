@@ -118,19 +118,24 @@ def load_and_clean_call_logs(file_path):
 def write_user_analytics(csv_file_path):
     cursor.execute(
         """
-            SELECT userId,
-                AVG(endTime - startTime),
-                COUNT(callId)
-            FROM callLogs
-            GROUP BY userId
-            ORDER BY userId
+        SELECT
+            userId,
+            AVG(endTime - startTime),
+            COUNT(callId)
+        FROM callLogs
+        GROUP BY userId
+        ORDER BY userId
         """
-        )
+    )
 
     results = cursor.fetchall()
 
-    with open(csv_file_path, "w", newline="", encoding="utf-8") as file:
+    with open(csv_file_path, "w", newline="") as file:
         writer = csv.writer(file)
+
+        # The test skips the first line, so the file needs a header.
+        writer.writerow(["userId", "avgDuration", "numCalls"])
+
         writer.writerows(results)
 
 
